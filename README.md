@@ -30,6 +30,10 @@
 5. Вернуть все комментарии оставленные пользователем:
 
     _/comments, GET, params: `userId`_
+    
+    or as an option (not implemented yet):
+    
+    _/users/{userId}/comments, GET_
 
 6. Вывести все посты с указанным title:
 
