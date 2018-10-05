@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table
 @Entity
 @Data
 @Builder
@@ -18,6 +17,7 @@ public class User {
     private Long id;
     private String name;
     private String username;
+    @Column(unique = true)
     private String email;
     @Embedded
     private Address address;

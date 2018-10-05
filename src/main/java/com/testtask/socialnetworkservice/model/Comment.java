@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table
+@Table(indexes = @Index(name = "IDX_COMMENT_EMAIL", columnList = "email"))
 @Entity
 @Data
 @EqualsAndHashCode(exclude = "id")

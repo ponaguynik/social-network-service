@@ -2,6 +2,7 @@ package com.testtask.socialnetworkservice.controller;
 
 import com.testtask.socialnetworkservice.dto.CommentDto;
 import com.testtask.socialnetworkservice.dto.RequestUrl;
+import com.testtask.socialnetworkservice.model.User;
 import com.testtask.socialnetworkservice.service.CommentService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,12 +24,19 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping(params = "userId")
+    @GetMapping(params = "userId",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<CommentDto> findAllByUserId(@RequestParam Long userId) {
         return commentService.findAllByUserId(userId);
     }
 
-    @PostMapping(path = "/count", params = "word")
+    @GetMapping(path = "/{commentId}/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public User getPostAuthor(@PathVariable Long commentId) {
+        return commentService.findCommentAuthor(commentId);
+    }
+
+    @PostMapping(path = "/count", params = "word",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Count countWordInAllComments(@RequestParam String word) {
         return Count.of(commentService.countWordInAllComments(word));
     }

@@ -33,7 +33,7 @@ public class PostController {
     }
 
     @DeleteMapping(path = "/{postId}")
-    public void delete(@PathVariable Long postId) {
+    public void deleteWithComments(@PathVariable Long postId) {
         postService.deleteById(postId);
     }
 

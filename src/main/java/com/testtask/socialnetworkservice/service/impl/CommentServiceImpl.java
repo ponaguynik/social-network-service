@@ -4,8 +4,10 @@ import com.testtask.socialnetworkservice.dto.CommentDto;
 import com.testtask.socialnetworkservice.exception.ResourceNotFoundException;
 import com.testtask.socialnetworkservice.model.Comment;
 import com.testtask.socialnetworkservice.model.Post;
+import com.testtask.socialnetworkservice.model.User;
 import com.testtask.socialnetworkservice.repository.CommentRepository;
 import com.testtask.socialnetworkservice.repository.PostRepository;
+import com.testtask.socialnetworkservice.repository.UserRepository;
 import com.testtask.socialnetworkservice.service.CommentService;
 import com.testtask.socialnetworkservice.service.ExternalDataLoadService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,16 +24,18 @@ import java.util.stream.Collectors;
 @Service
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
-    private final ExternalDataLoadService<CommentDto> loadService;
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
+    private final ExternalDataLoadService<CommentDto> loadService;
 
     @Autowired
     public CommentServiceImpl(CommentRepository commentRepository,
                               ExternalDataLoadService<CommentDto> loadService,
-                              PostRepository postRepository) {
+                              PostRepository postRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.loadService = loadService;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
@@ -66,6 +70,13 @@ public class CommentServiceImpl implements CommentService {
                 .filter(body -> !StringUtils.isEmpty(body))
                 .filter(body -> body.contains(word))
                 .count();
+    }
+
+    // TODO: 05-Oct-18 find author of comment by email
+    @Transactional(readOnly = true)
+    @Override
+    public User findCommentAuthor(Long commentId) {
+        return userRepository.findUserByCommentId(commentId);
     }
 
     private Comment findAndSetPost(Comment comment) {
