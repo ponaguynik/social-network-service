@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface CommentService {
 
-    List<CommentDto> findAllByUserId(Long userId);
-
     List<CommentDto> loadCommentsByUrl(String url);
 
-    long countWordInAllComments(String word);
+    List<CommentDto> findAllByUserId(Long userId);
 
-    User findCommentAuthor(Long commentId);
+    long countWordInBodyOfAllComments(String word);
+
+    User getCommentUser(Long commentId);
 }

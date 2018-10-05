@@ -51,18 +51,6 @@ public class PostServiceImpl implements PostService {
 
     @Transactional(readOnly = true)
     @Override
-    public Post findById(Long id) {
-        return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post by id " + id + " not found!"));
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public User findPostAuthor(Long id) {
-        return userRepository.findByPostId(id).orElseThrow(() -> new ResourceNotFoundException("Author of post with post id " + id + " not found!"));
-    }
-
-    @Transactional(readOnly = true)
-    @Override
     public List<PostDto> findAllByTitle(String title) {
         return postRepository.findAllByTitle(title).stream().map(PostDto::fromPost).collect(Collectors.toList());
     }

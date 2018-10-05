@@ -56,14 +56,14 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(readOnly = true)
     @Override
     public List<CommentDto> findAllByUserId(Long userId) {
-        return commentRepository.findAllByUserId(userId).stream()
+        return commentRepository.findAllByUserIdJoinEmail(userId).stream()
                 .map(CommentDto::fromComment)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     @Override
-    public long countWordInAllComments(String word) {
+    public long countWordInBodyOfAllComments(String word) {
         // do counting accordingly to the task requirement
         return commentRepository.findAll().stream()
                 .map(Comment::getBody)
@@ -72,11 +72,11 @@ public class CommentServiceImpl implements CommentService {
                 .count();
     }
 
-    // TODO: 05-Oct-18 find author of comment by email
     @Transactional(readOnly = true)
     @Override
-    public User findCommentAuthor(Long commentId) {
-        return userRepository.findUserByCommentId(commentId);
+    public User getCommentUser(Long commentId) {
+        return userRepository.findUserByCommentIdJoinEmail(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Author of comment with commentId " + commentId + " not found"));
     }
 
     private Comment findAndSetPost(Comment comment) {

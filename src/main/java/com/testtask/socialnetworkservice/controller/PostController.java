@@ -2,7 +2,6 @@ package com.testtask.socialnetworkservice.controller;
 
 import com.testtask.socialnetworkservice.dto.PostDto;
 import com.testtask.socialnetworkservice.dto.RequestUrl;
-import com.testtask.socialnetworkservice.model.User;
 import com.testtask.socialnetworkservice.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +19,6 @@ public class PostController {
     @Autowired
     public PostController(PostService postService) {
         this.postService = postService;
-    }
-
-    @GetMapping(path = "/{postId}/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public User getPostAuthor(@PathVariable Long postId) {
-        return postService.findPostAuthor(postId);
     }
 
     @GetMapping(params = "title", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

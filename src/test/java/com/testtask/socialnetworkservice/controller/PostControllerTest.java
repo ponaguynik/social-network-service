@@ -52,16 +52,6 @@ public class PostControllerTest extends AbstractControllerIntegrationTest {
     }
 
     @Test
-    public void getPostAuthorShouldReturnAuthorOfPost() throws Exception {
-        User user = givenUser(User.builder().id(1L).name("test").build());
-        givenPost(Post.builder().id(1L).user(user).build());
-        mockMvc.perform(get("/posts/{postId}/user", 1L))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().json(objectMapper.writeValueAsString(user)));
-    }
-
-    @Test
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void deleteWithCommentsShouldDeletePostWithComments() throws Exception {
         User user = givenUser(User.builder().id(1L).name("test").build());

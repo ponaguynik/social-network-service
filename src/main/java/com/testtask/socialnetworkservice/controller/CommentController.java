@@ -31,14 +31,14 @@ public class CommentController {
     }
 
     @GetMapping(path = "/{commentId}/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public User getPostAuthor(@PathVariable Long commentId) {
-        return commentService.findCommentAuthor(commentId);
+    public User getCommentUser(@PathVariable Long commentId) {
+        return commentService.getCommentUser(commentId);
     }
 
-    @PostMapping(path = "/count", params = "word",
+    @PostMapping(path = "/count", params = "wordInBody",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Count countWordInAllComments(@RequestParam String word) {
-        return Count.of(commentService.countWordInAllComments(word));
+    public Count countWordInBodyOfAllComments(@RequestParam String wordInBody) {
+        return Count.of(commentService.countWordInBodyOfAllComments(wordInBody));
     }
 
     @PostMapping(path = "/load",
